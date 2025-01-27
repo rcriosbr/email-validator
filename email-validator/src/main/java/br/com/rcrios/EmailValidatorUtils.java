@@ -13,27 +13,37 @@ public class EmailValidatorUtils {
 	private static final int MINIMUM_SIZE = 5;
 
 	/**
+	 * Hides utility class constructor
+	 */
+	private EmailValidatorUtils() {
+		// Does nothing
+	}
+
+
+	/**
 	 * Extracts the hostname from an email address.
 	 * 
-	 * @param email
-	 *            The email to be processed.
+	 * @param email The email to be processed.
 	 * 
-	 * @return The hostname. If the email is not valid (e.g.: without "@"), will
-	 *         throw an exception.
+	 * @return The hostname. If the email is not valid (e.g.: null or without "@"), will return an empty
+	 *         string.
 	 */
 	public static String getHostname(String email) {
+		if (email == null || email.trim().isEmpty()) {
+			return "";
+		}
+		if (email.indexOf("@") < 0) {
+			return "";
+		}
 		return email.substring(email.indexOf("@") + 1, email.length()).toLowerCase().trim();
 	}
 
 	/**
 	 * Convenience method to validate an email.
 	 * 
-	 * @param emailToBeValidated
-	 *            Email to be validated
+	 * @param emailToBeValidated Email to be validated
 	 * 
-	 * @throws EmailValidatorException
-	 *             The exception message contains the detail of way it was
-	 *             thrown.
+	 * @throws EmailValidatorException The exception message contains the detail of way it was thrown.
 	 */
 	public static void validate(String emailToBeValidated) throws EmailValidatorException {
 		if (emailToBeValidated == null || emailToBeValidated.trim().isEmpty()) {
@@ -59,9 +69,8 @@ public class EmailValidatorUtils {
 	 * 
 	 * @see EmailValidatorUtils#validateEmailAddress(String)
 	 * 
-	 * @param email
-	 *            Email to be validated
-	 *            
+	 * @param email Email to be validated
+	 * 
 	 * @return True if it's valid. False otherwise.
 	 */
 	public static boolean isValidEmailAddress(String email) {
@@ -79,13 +88,14 @@ public class EmailValidatorUtils {
 	 * 
 	 * @see javax.mail.internet.InternetAddress#validate()
 	 * 
-	 * @param email
-	 *            Email to be validates
-	 *            
-	 * @throws AddressException
-	 *             If its not valid
+	 * @param email Email to be validates
+	 * 
+	 * @throws AddressException If its not valid
 	 */
 	public static void validateEmailAddress(String email) throws AddressException {
+		if (email == null) {
+			throw new AddressException("Null email");
+		}
 		InternetAddress emailAddr = new InternetAddress(email);
 		emailAddr.validate();
 	}

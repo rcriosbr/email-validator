@@ -25,7 +25,7 @@ public class DNSUtils {
 	/**
 	 * JNDI DNS Service Provider supported resource record type
 	 */
-	public static String[] RECORD_TYPES = new String[] { "A", "NS", "CNAME", "SOA", "PTR", "MX", "TXT", "HINFO", "AAAA",
+	public static final String[] RECORD_TYPES = new String[] { "A", "NS", "CNAME", "SOA", "PTR", "MX", "TXT", "HINFO", "AAAA",
 			"NAPTR", "SRV" };
 
 	private static String MX_RECORD_TYPE = "MX";
@@ -153,10 +153,10 @@ public class DNSUtils {
 			Attributes attributes = idc.getAttributes(hostname, new String[] { MX_RECORD_TYPE });
 			Attribute attribute = attributes.get(MX_RECORD_TYPE);
 			
-			System.out.println(attribute);
+			LOGGER.debug("{}", attribute);
 			
 		} catch (NamingException e) {
-			e.printStackTrace();
+			LOGGER.error("Error checking MX records from '{}'", email, e);
 		}
 	}
 }
