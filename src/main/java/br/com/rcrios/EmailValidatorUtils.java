@@ -3,11 +3,13 @@ package br.com.rcrios;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedMap;
-
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jakarta.mail.internet.AddressException;
+import jakarta.mail.internet.InternetAddress;
 
 public class EmailValidatorUtils {
+	private static final Logger logger = LoggerFactory.getLogger(EmailValidatorUtils.class);
 
 	private static DNSUtils dns = new DNSUtils();
 	private static final int MINIMUM_SIZE = 5;
@@ -29,12 +31,10 @@ public class EmailValidatorUtils {
 	 *         string.
 	 */
 	public static String getHostname(String email) {
-		if (email == null || email.trim().isEmpty()) {
+		if (email == null || email.trim().isEmpty() || email.indexOf("@") < 0) {
 			return "";
 		}
-		if (email.indexOf("@") < 0) {
-			return "";
-		}
+
 		return email.substring(email.indexOf("@") + 1, email.length()).toLowerCase().trim();
 	}
 
@@ -78,6 +78,7 @@ public class EmailValidatorUtils {
 		try {
 			validateEmailAddress(email);
 		} catch (AddressException ex) {
+			logger.info("The email '{}' is not valid: {}", email, ex.getMessage());
 			result = false;
 		}
 		return result;
@@ -134,6 +135,7 @@ public class EmailValidatorUtils {
 		set.add(",");
 		set.add(".com.com");
 		set.add(".br.br");
+		set.add("null");
 
 		return set;
 	}

@@ -3,8 +3,8 @@ package br.com.rcrios;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import javax.mail.internet.AddressException;
 import org.junit.jupiter.api.Test;
+import jakarta.mail.internet.AddressException;
 
 class EmailValidatorUtilsTests {
 

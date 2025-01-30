@@ -6,7 +6,6 @@ import java.util.Properties;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.mail.internet.AddressException;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
@@ -15,6 +14,7 @@ import javax.naming.directory.InitialDirContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import jakarta.mail.internet.AddressException;
 
 /**
  * Utilities to help DNS manipulation
